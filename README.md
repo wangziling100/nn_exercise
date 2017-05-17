@@ -1,5 +1,3 @@
-# Declaration
-The exercise will be written based on the framework for KIT Neural Network Praktikum
 # NNPraktikum
 The coding framework for KIT Neural Network Praktikum
 
