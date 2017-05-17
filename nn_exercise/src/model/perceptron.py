@@ -7,6 +7,7 @@ import numpy as np
 
 from util.activation_functions import Activation
 from model.classifier import Classifier
+from report.evaluator import Evaluator
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                     level=logging.DEBUG,
@@ -56,9 +57,25 @@ class Perceptron(Classifier):
         verbose : boolean
             Print logging messages with validation accuracy if verbose is True.
         """
-        
         # Write your code to train the perceptron here
-        pass
+
+        
+        for i in xrange(self.epochs):
+            preds = []
+            for inputs,label in zip(self.trainingSet.input, self.trainingSet.label):
+
+                pred = self.fire(inputs)
+                preds.append(pred)
+
+                error = label-int(pred)
+                self.updateWeights(input=inputs, error=error)
+            if verbose:
+                evaluator = Evaluator()
+                evaluator.printAccuracy(self.trainingSet, preds)
+
+
+                
+        
 
     def classify(self, testInstance):
         """Classify a single instance.
@@ -73,7 +90,7 @@ class Perceptron(Classifier):
             True if the testInstance is recognized as a 7, False otherwise.
         """
         # Write your code to do the classification on an input image
-        pass
+        return self.fire(testInstance)
 
     def evaluate(self, test=None):
         """Evaluate a whole dataset.
@@ -96,8 +113,11 @@ class Perceptron(Classifier):
 
     def updateWeights(self, input, error):
         # Write your code to update the weights of the perceptron here
+        self.weight += self.learningRate*error*input
         pass
          
     def fire(self, input):
         """Fire the output of the perceptron corresponding to the input """
         return Activation.sign(np.dot(np.array(input), self.weight))
+        
+

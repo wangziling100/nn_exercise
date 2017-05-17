@@ -46,6 +46,21 @@ def main():
     print("\nResult of the Perceptron recognizer:")
     # evaluator.printComparison(data.testSet, perceptronPred)
     evaluator.printAccuracy(data.testSet, perceptronPred)
+
+    for i in xrange(10):
+        lr = 0.005*i
+        print("======================")
+        print("learningRate=%f" % lr)
+        myPer = Perceptron(data.trainingSet, data.validationSet,
+                data.testSet,
+                learningRate=lr,
+                epochs=30)
+        myPer.train(verbose=False)
+        myPred = myPer.evaluate()
+        print("\nResult of the Perceptron recognizer:")
+        evaluator.printAccuracy(data.testSet, myPred)
+
+
     
 
 if __name__ == '__main__':
